@@ -1,0 +1,40 @@
+.app {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .container {
+    min-width: 30vw;
+    position: relative;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    h1 {
+      text-align: center;
+    }
+    h6 {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+  }
+  .actions {
+    display: flex;
+    margin-top: auto;
+    button {
+      margin: 3px;
+    }
+    .remove {
+      color: red;
+      margin-left: auto;
+    }
+    .prime-color {
+      color: rebeccapurple;
+    }
+    .counter-color {
+      color: royalblue;
+    }
+  }
+}
