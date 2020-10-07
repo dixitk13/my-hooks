@@ -1,13 +1,13 @@
 import * as React from "react";
-import { useAsync } from "../hooks";
+import { useAsync, myPromise } from "../hooks";
 
 // Usage
 export const AsyncApp = () => {
-  const { execute, status, value, error } = useAsync(myFunction, false);
+  const { execute, status, value, error } = useAsync(myPromise, false);
 
   return (
-    <>
-      <h1>async app</h1>
+    <section>
+      <h1>useAsync app</h1>
       <div>
         {status === "idle" && (
           <div>Start your journey by clicking a button</div>
@@ -18,19 +18,6 @@ export const AsyncApp = () => {
           {status !== "pending" ? "Click me" : "Loading..."}
         </button>
       </div>
-    </>
+    </section>
   );
-};
-
-// An async function for testing our hook.
-// Will be successful 50% of the time.
-const myFunction = () => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const rnd = Math.random() * 10;
-      rnd <= 5
-        ? resolve("Submitted successfully 🙌")
-        : reject("Oh no there was an error 😞");
-    }, 2000);
-  });
 };
