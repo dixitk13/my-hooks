@@ -7,7 +7,8 @@
     "start": "concurrently --kill-others \"npm:compile:watch\" \"npm:start:dev\"",
     "start:dev": "tsc --noEmit && parcel public/index.html ",
     "compile:watch": "tsc -p . --noEmit --watch",
-    "build": "tsc --noEmit && parcel build ./index.html --out-dir build/release --public-url ./",
+    "predeploy": "tsc --noEmit && parcel build public/index.html --out-dir dist --public-url /my-hooks/",
+    "deploy": "gh-pages -d dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,7 +25,8 @@
   "dependencies": {
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "gh-pages": "^2.2.0"
   },
   "devDependencies": {
     "@types/react": "^16.9.42",
