@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "concurrently --kill-others \"npm:compile:watch\" \"npm:start:dev\"",
-    "start:dev": "tsc --noEmit && parcel public/index.html ",
+    "start:dev": "tsc --noEmit && parcel public/index.html --open",
     "compile:watch": "tsc -p . --noEmit --watch",
     "predeploy": "tsc --noEmit && parcel build public/index.html --out-dir dist --public-url /my-hooks/",
     "deploy": "gh-pages -d dist",

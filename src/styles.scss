@@ -1,0 +1,22 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .small-app {
+    width: 100%;
+    @media (min-width: 1025px) {
+      width: 30vw;
+    }
+
+    .status-bar {
+      color: white;
+      border-radius: 3px;
+      text-align: center;
+      background: lightcoral;
+    }
+    .start-btn {
+      margin: 0 3px;
+    }
+  }
+}

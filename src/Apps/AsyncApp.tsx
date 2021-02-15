@@ -1,23 +1,29 @@
 import * as React from "react";
-import { useAsync, myPromise } from "../hooks";
+import { CodeAccordion } from "../CodeAccordion";
+import { useAsync, stringUseAsync, myPromise } from "../hooks";
 
-// Usage
 export const AsyncApp = () => {
   const { execute, status, value, error } = useAsync(myPromise, false);
 
   return (
-    <section>
-      <h1>useAsync app</h1>
-      <div>
-        {status === "idle" && (
-          <div>Start your journey by clicking a button</div>
-        )}
-        {status === "success" && <div>{value}</div>}
-        {status === "error" && <div>{error}</div>}
-        <button onClick={execute} disabled={status === "pending"}>
-          {status !== "pending" ? "Click me" : "Loading..."}
+    <article className="small-app">
+      <h3>useAsync</h3>
+      <p>
+        Click
+        <button
+          className="start-btn"
+          onClick={execute}
+          disabled={status === "pending"}
+        >
+          {status !== "pending" ? "here" : "Loading..."}
         </button>
-      </div>
-    </section>
+        invoke an async API hook
+      </p>
+
+      <div className="status-bar">STATUS: {status}</div>
+      {status === "success" && <div>{value}</div>}
+      {status === "error" && <div>{error}</div>}
+      <CodeAccordion code={stringUseAsync} />
+    </article>
   );
 };
