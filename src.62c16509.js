@@ -32256,13 +32256,138 @@ if ("development" !== "production") {
     style: _propTypes.default.object
   });
 }
-},{"react-router":"../node_modules/react-router/esm/react-router.js","@babel/runtime/helpers/esm/inheritsLoose":"../node_modules/@babel/runtime/helpers/esm/inheritsLoose.js","react":"../node_modules/react/index.js","history":"../node_modules/history/esm/history.js","prop-types":"../node_modules/prop-types/index.js","tiny-warning":"../node_modules/tiny-warning/dist/tiny-warning.esm.js","@babel/runtime/helpers/esm/extends":"../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","tiny-invariant":"../node_modules/tiny-invariant/dist/tiny-invariant.esm.js"}],"../src/hooks/useAsync.ts":[function(require,module,exports) {
+},{"react-router":"../node_modules/react-router/esm/react-router.js","@babel/runtime/helpers/esm/inheritsLoose":"../node_modules/@babel/runtime/helpers/esm/inheritsLoose.js","react":"../node_modules/react/index.js","history":"../node_modules/history/esm/history.js","prop-types":"../node_modules/prop-types/index.js","tiny-warning":"../node_modules/tiny-warning/dist/tiny-warning.esm.js","@babel/runtime/helpers/esm/extends":"../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","tiny-invariant":"../node_modules/tiny-invariant/dist/tiny-invariant.esm.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
+
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
+  }
+
+  return bundleURL;
+}
+
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
+  }
+
+  return '/';
+}
+
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
+}
+
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"../node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+
+  newLink.onload = function () {
+    link.remove();
+  };
+
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
+
+    cssTimeout = null;
+  }, 50);
+}
+
+module.exports = reloadCSS;
+},{"./bundle-url":"../node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"../src/CodeAccordion/styles.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../src/CodeAccordion/CodeAccordion.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.useAsync = void 0;
+exports.CodeAccordion = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+require("./styles.scss");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var CodeAccordion = function CodeAccordion(_a) {
+  var code = _a.code;
+
+  var _b = React.useReducer(function (a) {
+    return !a;
+  }, false),
+      open = _b[0],
+      setOpen = _b[1];
+
+  return React.createElement("article", {
+    className: "code-accordion"
+  }, React.createElement("button", {
+    onClick: setOpen
+  }, open ? "x" : "View Code"), React.createElement("div", {
+    className: "code-panel " + (open ? "open" : "close") + " "
+  }, React.createElement("pre", null, String(code))));
+};
+
+exports.CodeAccordion = CodeAccordion;
+},{"react":"../node_modules/react/index.js","./styles.scss":"../src/CodeAccordion/styles.scss"}],"../src/CodeAccordion/index.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _CodeAccordion = require("./CodeAccordion");
+
+Object.keys(_CodeAccordion).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function () {
+      return _CodeAccordion[key];
+    }
+  });
+});
+},{"./CodeAccordion":"../src/CodeAccordion/CodeAccordion.tsx"}],"../src/hooks/useAsync.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.stringUseAsync = exports.useAsync = void 0;
 
 var _react = require("react");
 
@@ -32466,6 +32591,8 @@ var useAsync = function useAsync(asyncFunction, immediate) {
 };
 
 exports.useAsync = useAsync;
+var stringUseAsync = "\nexport const useAsync = (\n  asyncFunction: () => Promise<any>,\n  immediate = true\n) => {\n  const [status, setStatus] = useState(\"idle\");\n  const [value, setValue] = useState(null);\n  const [error, setError] = useState(null);\n\n  // The execute function wraps \n  // asyncFunction and handles setting \n  // state for pending, value, and error.\n  // useCallback ensures the below \n\n  // useEffect is not called on every \n  // render, but only if asyncFunction \n  // changes.\n\n  const execute = useCallback(async () => {\n    setStatus(\"pending\");\n    setValue(null);\n    setError(null);\n\n    return asyncFunction()\n      .then((response) => {\n        setValue(response);\n        setStatus(\"success\");\n      })\n      .catch((error) => {\n        setError(error);\n        setStatus(\"error\");\n      });\n  }, [asyncFunction]);\n\n  // Call execute if we want to fire\n  // it right away. Otherwise execute \n  // can be called later, such as\n  // in an onClick handler.\n  useEffect(() => {\n    if (immediate) {\n      execute();\n    }\n  }, [execute, immediate]);\n\n  return { execute, status, value, error };\n};\n";
+exports.stringUseAsync = stringUseAsync;
 },{"react":"../node_modules/react/index.js"}],"../src/hooks/myPromise.ts":[function(require,module,exports) {
 "use strict";
 
@@ -32492,7 +32619,7 @@ exports.myPromise = myPromise;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.useInterval = void 0;
+exports.stringUseInterval = exports.useInterval = void 0;
 
 var _react = require("react");
 
@@ -32536,6 +32663,8 @@ var useInterval = function useInterval(fn, delay, deps) {
 };
 
 exports.useInterval = useInterval;
+var stringUseInterval = "\nexport const useInterval = (\n  fn: Function,\n  delay: number = 500,\n  deps: React.DependencyList = []\n) => {\n  const timeoutId = useRef<number | undefined>();\n\n  useEffect(() => {\n    if (!fn) return;\n\n    if (timeoutId.current) clearInterval(timeoutId.current);\n\n    if (delay !== null && delay !== undefined) {\n      timeoutId.current = setInterval(fn, delay);\n    }\n\n    return () => clearInterval(timeoutId.current);\n  }, [delay, ...deps]);\n\n  return fn;\n};\n";
+exports.stringUseInterval = stringUseInterval;
 },{"react":"../node_modules/react/index.js"}],"../src/hooks/index.ts":[function(require,module,exports) {
 "use strict";
 
@@ -32588,13 +32717,14 @@ exports.AsyncApp = void 0;
 
 var React = _interopRequireWildcard(require("react"));
 
+var _CodeAccordion = require("../CodeAccordion");
+
 var _hooks = require("../hooks");
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-// Usage
 var AsyncApp = function AsyncApp() {
   var _a = (0, _hooks.useAsync)(_hooks.myPromise, false),
       execute = _a.execute,
@@ -32602,14 +32732,21 @@ var AsyncApp = function AsyncApp() {
       value = _a.value,
       error = _a.error;
 
-  return React.createElement("section", null, React.createElement("h1", null, "useAsync app"), React.createElement("div", null, status === "idle" && React.createElement("div", null, "Start your journey by clicking a button"), status === "success" && React.createElement("div", null, value), status === "error" && React.createElement("div", null, error), React.createElement("button", {
+  return React.createElement("article", {
+    className: "small-app"
+  }, React.createElement("h3", null, "useAsync"), React.createElement("p", null, "Click", React.createElement("button", {
+    className: "start-btn",
     onClick: execute,
     disabled: status === "pending"
-  }, status !== "pending" ? "Click me" : "Loading...")));
+  }, status !== "pending" ? "here" : "Loading..."), "invoke an async API hook"), React.createElement("div", {
+    className: "status-bar"
+  }, "STATUS: ", status), status === "success" && React.createElement("div", null, value), status === "error" && React.createElement("div", null, error), React.createElement(_CodeAccordion.CodeAccordion, {
+    code: _hooks.stringUseAsync
+  }));
 };
 
 exports.AsyncApp = AsyncApp;
-},{"react":"../node_modules/react/index.js","../hooks":"../src/hooks/index.ts"}],"../src/Apps/MemoCompareApp.tsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../CodeAccordion":"../src/CodeAccordion/index.ts","../hooks":"../src/hooks/index.ts"}],"../src/Apps/MemoCompareApp.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32624,7 +32761,9 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var MemoCompareApp = function MemoCompareApp() {
-  return React.createElement("div", null, "memo compare app");
+  return React.createElement("article", {
+    className: "small-app"
+  }, React.createElement("h3", null, "useMemoCompare"), React.createElement("p", null, "WIP!"));
 };
 
 exports.MemoCompareApp = MemoCompareApp;
@@ -32638,6 +32777,8 @@ exports.IntervalApp = void 0;
 
 var React = _interopRequireWildcard(require("react"));
 
+var _CodeAccordion = require("../CodeAccordion");
+
 var _hooks = require("../hooks");
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
@@ -32648,17 +32789,60 @@ var IntervalApp = function IntervalApp() {
   var _a = React.useReducer(function (a) {
     return !a;
   }, false),
-      state = _a[0],
-      toggleState = _a[1];
+      intervalState = _a[0],
+      toggleIntervalState = _a[1];
 
-  (0, _hooks.useInterval)(function () {
-    return toggleState();
-  }, 600);
-  return React.createElement("section", null, React.createElement("h3", null, "useInterval app"), React.createElement("div", null, "Status: ", String(state)), React.createElement("div", null, "Interval is toggling status"));
+  var _b = React.useReducer(function (a) {
+    return !a;
+  }, false),
+      start = _b[0],
+      toggleStart = _b[1];
+
+  var toggleHelper = React.useCallback(function () {
+    return start && toggleIntervalState();
+  }, [start]);
+  React.useEffect(function () {
+    if (start) toggleIntervalState();
+  }, [start]);
+  (0, _hooks.useInterval)(toggleHelper, 600, [start]);
+  return React.createElement("article", {
+    className: "small-app"
+  }, React.createElement("h3", null, "useInterval"), React.createElement("p", null, "Click to", React.createElement("button", {
+    className: "start-btn",
+    onClick: toggleStart
+  }, !start ? "start" : "end"), "toggling status"), React.createElement("div", {
+    className: "status-bar"
+  }, "STATUS: ", String(intervalState)), React.createElement(_CodeAccordion.CodeAccordion, {
+    code: _hooks.stringUseInterval
+  }));
 };
 
 exports.IntervalApp = IntervalApp;
-},{"react":"../node_modules/react/index.js","../hooks":"../src/hooks/index.ts"}],"../src/Apps/index.ts":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../CodeAccordion":"../src/CodeAccordion/index.ts","../hooks":"../src/hooks/index.ts"}],"../src/Apps/Home.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Home = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var Home = function Home() {
+  return React.createElement("article", {
+    className: "small-app"
+  }, React.createElement("h3", null, "my-hooks"), React.createElement("p", null, "contains some hooks which have been either:"), React.createElement("ul", null, React.createElement("li", null, "inspired from", " ", React.createElement("a", {
+    href: "https://usehooks.com/",
+    rel: "noopener noreferrer"
+  }, "usehooks")), React.createElement("li", null, "i've created or used in other projects")));
+};
+
+exports.Home = Home;
+},{"react":"../node_modules/react/index.js"}],"../src/Apps/index.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32700,7 +32884,24 @@ Object.keys(_IntervalApp).forEach(function (key) {
     }
   });
 });
-},{"./AsyncApp":"../src/Apps/AsyncApp.tsx","./MemoCompareApp":"../src/Apps/MemoCompareApp.tsx","./IntervalApp":"../src/Apps/IntervalApp.tsx"}],"../src/App.tsx":[function(require,module,exports) {
+
+var _Home = require("./Home");
+
+Object.keys(_Home).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function () {
+      return _Home[key];
+    }
+  });
+});
+},{"./AsyncApp":"../src/Apps/AsyncApp.tsx","./MemoCompareApp":"../src/Apps/MemoCompareApp.tsx","./IntervalApp":"../src/Apps/IntervalApp.tsx","./Home":"../src/Apps/Home.tsx"}],"../src/styles.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../src/App.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32714,33 +32915,43 @@ var _reactRouterDom = require("react-router-dom");
 
 var _Apps = require("./Apps");
 
+require("./styles.scss");
+
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var App = function App() {
   var links = [{
+    to: "/",
+    component: _Apps.Home,
+    linkName: "home"
+  }, {
     to: "/useAsync",
-    component: _Apps.AsyncApp
+    component: _Apps.AsyncApp,
+    linkName: "useAsync"
   }, {
     to: "/useInterval",
-    component: _Apps.IntervalApp
+    component: _Apps.IntervalApp,
+    linkName: "useInterval"
   }, {
     to: "/useMemoCompare",
-    component: _Apps.MemoCompareApp
+    component: _Apps.MemoCompareApp,
+    linkName: "useMemoCompare"
   }];
-  return React.createElement(_reactRouterDom.BrowserRouter, null, React.createElement("main", null, React.createElement("h1", null, "my-hooks"), React.createElement("nav", null, React.createElement("ul", null, links.map(function (x, index) {
-    var _a;
-
+  return React.createElement(_reactRouterDom.BrowserRouter, null, React.createElement("main", {
+    className: "app"
+  }, React.createElement("header", null, React.createElement("h1", null, "my-hooks")), React.createElement("nav", null, React.createElement("ul", null, links.map(function (x, index) {
     return React.createElement("li", {
       key: "route-" + index
     }, React.createElement(_reactRouterDom.Link, {
       to: x.to
-    }, (_a = x.to) === null || _a === void 0 ? void 0 : _a.replace("/", "")));
+    }, x.linkName));
   }))), React.createElement(_reactRouterDom.Switch, null, links.map(function (_a, index) {
     var to = _a.to,
         Component = _a.component;
     return React.createElement(_reactRouterDom.Route, {
+      exact: true,
       path: to,
       key: "route-app-" + index
     }, React.createElement(Component, null));
@@ -32748,7 +32959,7 @@ var App = function App() {
 };
 
 exports.App = App;
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./Apps":"../src/Apps/index.ts"}],"../src/index.tsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./Apps":"../src/Apps/index.ts","./styles.scss":"../src/styles.scss"}],"../src/index.tsx":[function(require,module,exports) {
 "use strict";
 
 var React = _interopRequireWildcard(require("react"));
@@ -32790,7 +33001,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57201" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50056" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

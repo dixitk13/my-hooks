@@ -1,0 +1,48 @@
+.code-accordion {
+  margin-top: 10px;
+}
+.code-accordion button {
+  width: 100%;
+}
+.code-accordion .code-panel {
+  transition: height 0.4s ease;
+  height: 0;
+}
+.code-accordion .code-panel pre {
+  display: none;
+}
+.code-accordion .code-panel.open {
+  height: 400px;
+  width: inherit;
+  overflow: scroll;
+}
+.code-accordion .code-panel.open pre {
+  width: inherit;
+  white-space: pre-wrap;
+  display: inline-block;
+}
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.app .small-app {
+  width: 100%;
+}
+@media (min-width: 1025px) {
+  .app .small-app {
+    width: 30vw;
+  }
+}
+.app .small-app .status-bar {
+  color: white;
+  border-radius: 3px;
+  text-align: center;
+  background: lightcoral;
+}
+.app .small-app .start-btn {
+  margin: 0 3px;
+}
+
+/*# sourceMappingURL=/src.62c16509.css.map */
