@@ -8,6 +8,7 @@ import {
   UseMemoCompareApp,
   UsePreviousApp,
   Home,
+  RedirectToHome,
 } from "./Apps";
 
 import "./styles.scss";
@@ -15,23 +16,32 @@ import "./styles.scss";
 export const App = () => {
   // TODO: fix linkName and to text redundancy
   const links = [
-    { to: "/my-hooks-home", component: Home, linkName: "my-hooks-home" },
+    { to: "/home", component: Home, linkName: "my-hooks-home" },
     { to: "/useAsync", component: UseAsyncApp, linkName: "useAsync" },
-    { to: "/useInterval", component: UseIntervalApp, linkName: "useInterval" },
+    {
+      to: "/useInterval",
+      component: UseIntervalApp,
+      linkName: "useInterval",
+    },
     {
       to: "/useLayoutEffect",
       component: UseLayoutEffectApp,
       linkName: "useLayoutEffect",
     },
-    { to: "/usePrevious", component: UsePreviousApp, linkName: "usePrevious" },
+    {
+      to: "/usePrevious",
+      component: UsePreviousApp,
+      linkName: "usePrevious",
+    },
     {
       to: "/useMemoCompare",
       component: UseMemoCompareApp,
       linkName: "useMemoCompare",
     },
   ];
+
   return (
-    <Router>
+    <Router basename="/my-hooks">
       <main className="app">
         <header>
           <h1>my-hooks</h1>
@@ -54,6 +64,9 @@ export const App = () => {
               </article>
             </Route>
           ))}
+          <Route exact path="/" key={`route-app-`}>
+            <RedirectToHome />
+          </Route>
         </Switch>
       </main>
     </Router>
