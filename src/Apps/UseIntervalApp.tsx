@@ -2,33 +2,32 @@ import * as React from "react";
 import { CodeAccordion } from "../CodeAccordion";
 import { useInterval, stringUseInterval } from "../hooks";
 
+const INTERVAL = 600;
+
 export const UseIntervalApp = () => {
-  const [intervalState, toggleIntervalState] = React.useReducer(
-    (a) => !a,
-    false
-  );
-  const [start, toggleStart] = React.useReducer((a) => !a, false);
+  const [val, setVal] = React.useState<number>(0);
+  const [interval, setInterval] = React.useState<number | undefined>(undefined);
 
-  const toggleHelper = React.useCallback(() => start && toggleIntervalState(), [
-    start,
-  ]);
+  const incrHelper = React.useCallback(() => {
+    setVal(val + 1);
+  }, [val]);
 
-  React.useEffect(() => {
-    if (start) toggleIntervalState();
-  }, [start]);
-
-  useInterval(toggleHelper, 600, [start]);
+  useInterval(incrHelper, interval);
 
   return (
     <>
       <p>
         Click to
-        <button className="start-btn" onClick={toggleStart}>
-          {!start ? "start" : "end"}
+        <button
+          className="start-btn"
+          onClick={() =>
+            interval ? setInterval(undefined) : setInterval(INTERVAL)
+          }
+        >
+          {!interval ? `Start interval` : "end interval"}
         </button>
-        toggling status
       </p>
-      <div className="status-bar">STATUS: {String(intervalState)}</div>
+      <div className="status-bar">VALUE: {String(val)}</div>
       <CodeAccordion code={stringUseInterval} />
     </>
   );
