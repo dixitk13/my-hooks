@@ -21,7 +21,7 @@ import "./styles.scss";
 export const App = () => {
   // TODO: fix linkName and to text redundancy
   const links = [
-    { to: "/home", component: Home, linkName: "my-hooks-home" },
+    { to: "/", component: Home, linkName: "my-hooks-home", exact: true },
     { to: "/useAsync", component: UseAsyncApp, linkName: "useAsync" },
     {
       to: "/useInterval",
@@ -45,8 +45,9 @@ export const App = () => {
     },
   ];
 
+  console.log(">>: App.tsx ~ process.env.PUBLIC_URL", process.env.PUBLIC_URL);
   return (
-    <Router basename="/my-hooks">
+    <Router basename={process.env.PUBLIC_URL}>
       <main className="app">
         <header>
           <h1>my-hooks</h1>
@@ -61,15 +62,15 @@ export const App = () => {
           </ul>
         </nav>
         <Switch>
-          {links.map(({ to, linkName, component: Component }, index) => (
-            <Route exact path={to} key={`route-app-${index}`}>
+          {links.map(({ to, linkName, component: Component, exact }, index) => (
+            <Route exact={exact} path={to} key={`route-app-${index}`}>
               <article className="small-app">
                 <h3>{linkName}</h3>
                 <Component />
               </article>
             </Route>
           ))}
-          <Redirect to="/home" />
+          <Redirect to="/" />
         </Switch>
       </main>
     </Router>
