@@ -32996,35 +32996,7 @@ var UsePreviousApp = function UsePreviousApp() {
 };
 
 exports.UsePreviousApp = UsePreviousApp;
-},{"react":"../node_modules/react/index.js","../hooks/usePrevious":"../src/hooks/usePrevious.ts","../Card":"../src/Card/index.ts","../CodeAccordion":"../src/CodeAccordion/index.ts"}],"../src/Apps/RedirectToHome.tsx":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.RedirectToHome = void 0;
-
-var React = _interopRequireWildcard(require("react"));
-
-var _reactRouterDom = require("react-router-dom");
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-var RedirectToHome = function RedirectToHome() {
-  var history = (0, _reactRouterDom.useHistory)();
-  var location = (0, _reactRouterDom.useLocation)();
-  React.useEffect(function () {
-    if ((location === null || location === void 0 ? void 0 : location.pathname) === "/my-hooks" || (location === null || location === void 0 ? void 0 : location.pathname) === "/") {
-      history.push("/home");
-    }
-  }, [location]);
-  return React.createElement(React.Fragment, null);
-};
-
-exports.RedirectToHome = RedirectToHome;
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"../src/Apps/Home.tsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../hooks/usePrevious":"../src/hooks/usePrevious.ts","../Card":"../src/Card/index.ts","../CodeAccordion":"../src/CodeAccordion/index.ts"}],"../src/Apps/Home.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33113,18 +33085,6 @@ Object.keys(_UsePreviousApp).forEach(function (key) {
   });
 });
 
-var _RedirectToHome = require("./RedirectToHome");
-
-Object.keys(_RedirectToHome).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function () {
-      return _RedirectToHome[key];
-    }
-  });
-});
-
 var _Home = require("./Home");
 
 Object.keys(_Home).forEach(function (key) {
@@ -33136,7 +33096,7 @@ Object.keys(_Home).forEach(function (key) {
     }
   });
 });
-},{"./UseAsyncApp":"../src/Apps/UseAsyncApp.tsx","./UseMemoCompareApp":"../src/Apps/UseMemoCompareApp.tsx","./UseLayoutEffectApp":"../src/Apps/UseLayoutEffectApp.tsx","./UseIntervalApp":"../src/Apps/UseIntervalApp.tsx","./UsePreviousApp":"../src/Apps/UsePreviousApp.tsx","./RedirectToHome":"../src/Apps/RedirectToHome.tsx","./Home":"../src/Apps/Home.tsx"}],"../src/styles.scss":[function(require,module,exports) {
+},{"./UseAsyncApp":"../src/Apps/UseAsyncApp.tsx","./UseMemoCompareApp":"../src/Apps/UseMemoCompareApp.tsx","./UseLayoutEffectApp":"../src/Apps/UseLayoutEffectApp.tsx","./UseIntervalApp":"../src/Apps/UseIntervalApp.tsx","./UsePreviousApp":"../src/Apps/UsePreviousApp.tsx","./Home":"../src/Apps/Home.tsx"}],"../src/styles.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -33209,11 +33169,9 @@ var App = function App() {
     }, React.createElement("article", {
       className: "small-app"
     }, React.createElement("h3", null, linkName), React.createElement(Component, null)));
-  }), React.createElement(_reactRouterDom.Route, {
-    exact: true,
-    path: "/",
-    key: "route-app-"
-  }, React.createElement(_Apps.RedirectToHome, null)))));
+  }), React.createElement(_reactRouterDom.Redirect, {
+    to: "/home"
+  }))));
 };
 
 exports.App = App;
@@ -33259,7 +33217,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65306" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52845" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
