@@ -32707,13 +32707,13 @@ Object.keys(_useInterval).forEach(function (key) {
     }
   });
 });
-},{"./useAsync":"../src/hooks/useAsync.ts","./myPromise":"../src/hooks/myPromise.ts","./useInterval":"../src/hooks/useInterval.ts"}],"../src/Apps/AsyncApp.tsx":[function(require,module,exports) {
+},{"./useAsync":"../src/hooks/useAsync.ts","./myPromise":"../src/hooks/myPromise.ts","./useInterval":"../src/hooks/useInterval.ts"}],"../src/Apps/UseAsyncApp.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.AsyncApp = void 0;
+exports.UseAsyncApp = void 0;
 
 var React = _interopRequireWildcard(require("react"));
 
@@ -32725,16 +32725,14 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-var AsyncApp = function AsyncApp() {
+var UseAsyncApp = function UseAsyncApp() {
   var _a = (0, _hooks.useAsync)(_hooks.myPromise, false),
       execute = _a.execute,
       status = _a.status,
       value = _a.value,
       error = _a.error;
 
-  return React.createElement("article", {
-    className: "small-app"
-  }, React.createElement("h3", null, "useAsync"), React.createElement("p", null, "Click", React.createElement("button", {
+  return React.createElement(React.Fragment, null, React.createElement("p", null, "Click", React.createElement("button", {
     className: "start-btn",
     onClick: execute,
     disabled: status === "pending"
@@ -32745,14 +32743,14 @@ var AsyncApp = function AsyncApp() {
   }));
 };
 
-exports.AsyncApp = AsyncApp;
-},{"react":"../node_modules/react/index.js","../CodeAccordion":"../src/CodeAccordion/index.ts","../hooks":"../src/hooks/index.ts"}],"../src/Apps/MemoCompareApp.tsx":[function(require,module,exports) {
+exports.UseAsyncApp = UseAsyncApp;
+},{"react":"../node_modules/react/index.js","../CodeAccordion":"../src/CodeAccordion/index.ts","../hooks":"../src/hooks/index.ts"}],"../src/Apps/UseMemoCompareApp.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.MemoCompareApp = void 0;
+exports.UseMemoCompareApp = void 0;
 
 var React = _interopRequireWildcard(require("react"));
 
@@ -32760,20 +32758,136 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-var MemoCompareApp = function MemoCompareApp() {
-  return React.createElement("article", {
-    className: "small-app"
-  }, React.createElement("h3", null, "useMemoCompare"), React.createElement("p", null, "WIP!"));
+var UseMemoCompareApp = function UseMemoCompareApp() {
+  return React.createElement(React.Fragment, null, React.createElement("p", null, "WIP!"));
 };
 
-exports.MemoCompareApp = MemoCompareApp;
-},{"react":"../node_modules/react/index.js"}],"../src/Apps/IntervalApp.tsx":[function(require,module,exports) {
+exports.UseMemoCompareApp = UseMemoCompareApp;
+},{"react":"../node_modules/react/index.js"}],"../src/Card/styles.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../src/Card/Card.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.IntervalApp = void 0;
+exports.Card = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+require("./styles.scss");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var Card = function Card(_a) {
+  var title = _a.title,
+      actionButton = _a.actionButton,
+      children = _a.children;
+  return React.createElement(React.Fragment, null, React.createElement("section", {
+    className: "card"
+  }, React.createElement("div", {
+    className: "card__container"
+  }, React.createElement("p", {
+    className: "card__title"
+  }, title), React.createElement("p", {
+    className: "card__content"
+  }, children)), React.createElement("div", {
+    className: "card__button"
+  }, actionButton)));
+};
+
+exports.Card = Card;
+},{"react":"../node_modules/react/index.js","./styles.scss":"../src/Card/styles.scss"}],"../src/Card/index.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _Card = require("./Card");
+
+Object.keys(_Card).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function () {
+      return _Card[key];
+    }
+  });
+});
+},{"./Card":"../src/Card/Card.tsx"}],"../src/Apps/UseLayoutEffectApp.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.UseLayoutEffectApp = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+var _Card = require("../Card");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var UseLayoutEffectApp = function UseLayoutEffectApp() {
+  return React.createElement(React.Fragment, null, React.createElement("p", {
+    className: "status-bar"
+  }, "useEffect vs useLayoutEffect"), React.createElement("div", {
+    className: "radio-list"
+  }, React.createElement(UsingEffectApp, null), React.createElement(UsingLayoutEffectApp, null)));
+};
+
+exports.UseLayoutEffectApp = UseLayoutEffectApp;
+
+var UsingLayoutEffectApp = function UsingLayoutEffectApp() {
+  var _a = React.useState(0),
+      count = _a[0],
+      setCount = _a[1];
+
+  React.useLayoutEffect(function () {
+    if (count === 0) setCount(3.14);
+  }, [count]);
+  return React.createElement(_Card.Card, {
+    title: "useLayoutEffect",
+    actionButton: React.createElement("button", {
+      onClick: function onClick() {
+        return setCount(0);
+      }
+    }, "\u2728")
+  }, "\uD83E\uDD67 = " + count);
+};
+
+var UsingEffectApp = function UsingEffectApp() {
+  var _a = React.useState(0),
+      count = _a[0],
+      setCount = _a[1];
+
+  React.useEffect(function () {
+    if (count === 0) setCount(3.14);
+  }, [count]);
+  return React.createElement(_Card.Card, {
+    title: "useEffect",
+    actionButton: React.createElement("button", {
+      onClick: function onClick() {
+        return setCount(0);
+      }
+    }, count !== 0 ? "✨" : "⏱️")
+  }, "\uD83E\uDD67 = " + count);
+};
+},{"react":"../node_modules/react/index.js","../Card":"../src/Card/index.ts"}],"../src/Apps/UseIntervalApp.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.UseIntervalApp = void 0;
 
 var React = _interopRequireWildcard(require("react"));
 
@@ -32785,7 +32899,7 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-var IntervalApp = function IntervalApp() {
+var UseIntervalApp = function UseIntervalApp() {
   var _a = React.useReducer(function (a) {
     return !a;
   }, false),
@@ -32805,9 +32919,7 @@ var IntervalApp = function IntervalApp() {
     if (start) toggleIntervalState();
   }, [start]);
   (0, _hooks.useInterval)(toggleHelper, 600, [start]);
-  return React.createElement("article", {
-    className: "small-app"
-  }, React.createElement("h3", null, "useInterval"), React.createElement("p", null, "Click to", React.createElement("button", {
+  return React.createElement(React.Fragment, null, React.createElement("p", null, "Click to", React.createElement("button", {
     className: "start-btn",
     onClick: toggleStart
   }, !start ? "start" : "end"), "toggling status"), React.createElement("div", {
@@ -32817,8 +32929,74 @@ var IntervalApp = function IntervalApp() {
   }));
 };
 
-exports.IntervalApp = IntervalApp;
-},{"react":"../node_modules/react/index.js","../CodeAccordion":"../src/CodeAccordion/index.ts","../hooks":"../src/hooks/index.ts"}],"../src/Apps/Home.tsx":[function(require,module,exports) {
+exports.UseIntervalApp = UseIntervalApp;
+},{"react":"../node_modules/react/index.js","../CodeAccordion":"../src/CodeAccordion/index.ts","../hooks":"../src/hooks/index.ts"}],"../src/hooks/usePrevious.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.stringUsePrevious = exports.usePrevious = void 0;
+
+var _react = require("react");
+
+var usePrevious = function usePrevious(t) {
+  var ref = (0, _react.useRef)(t);
+  (0, _react.useEffect)(function () {
+    ref.current = t;
+  }, [t]);
+  return ref.current;
+};
+
+exports.usePrevious = usePrevious;
+var stringUsePrevious = "\nexport const usePrevious = <T>(t: T): T => {\n  const ref = useRef<T>(t);\n\n  useEffect(() => {\n    ref.current = t;\n  }, [t]);\n\n  return ref.current;\n};\n";
+exports.stringUsePrevious = stringUsePrevious;
+},{"react":"../node_modules/react/index.js"}],"../src/Apps/UsePreviousApp.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.UsePreviousApp = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+var _usePrevious = require("../hooks/usePrevious");
+
+var _Card = require("../Card");
+
+var _CodeAccordion = require("../CodeAccordion");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var UsePreviousApp = function UsePreviousApp() {
+  var _a = React.useState(0),
+      count = _a[0],
+      setCount = _a[1];
+
+  var increment = function increment() {
+    return setCount(count + 1);
+  };
+
+  var prevValue = (0, _usePrevious.usePrevious)(count);
+  return React.createElement(React.Fragment, null, React.createElement("p", null, React.createElement("button", {
+    className: "start-btn",
+    onClick: increment
+  }, "Click me"), "to increment!"), React.createElement("div", {
+    className: "card-list"
+  }, React.createElement(_Card.Card, {
+    title: "Current"
+  }, count), React.createElement(_Card.Card, {
+    title: "Previous"
+  }, prevValue)), React.createElement(_CodeAccordion.CodeAccordion, {
+    code: _usePrevious.stringUsePrevious
+  }));
+};
+
+exports.UsePreviousApp = UsePreviousApp;
+},{"react":"../node_modules/react/index.js","../hooks/usePrevious":"../src/hooks/usePrevious.ts","../Card":"../src/Card/index.ts","../CodeAccordion":"../src/CodeAccordion/index.ts"}],"../src/Apps/Home.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32833,9 +33011,7 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var Home = function Home() {
-  return React.createElement("article", {
-    className: "small-app"
-  }, React.createElement("h3", null, "my-hooks"), React.createElement("p", null, "contains some hooks which have been either:"), React.createElement("ul", null, React.createElement("li", null, "inspired from", " ", React.createElement("a", {
+  return React.createElement(React.Fragment, null, React.createElement("p", null, "contains some hooks which have been either:"), React.createElement("ul", null, React.createElement("li", null, "inspired from", " ", React.createElement("a", {
     href: "https://usehooks.com/",
     rel: "noopener noreferrer"
   }, "usehooks")), React.createElement("li", null, "i've created or used in other projects")));
@@ -32849,38 +33025,62 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _AsyncApp = require("./AsyncApp");
+var _UseAsyncApp = require("./UseAsyncApp");
 
-Object.keys(_AsyncApp).forEach(function (key) {
+Object.keys(_UseAsyncApp).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function () {
-      return _AsyncApp[key];
+      return _UseAsyncApp[key];
     }
   });
 });
 
-var _MemoCompareApp = require("./MemoCompareApp");
+var _UseMemoCompareApp = require("./UseMemoCompareApp");
 
-Object.keys(_MemoCompareApp).forEach(function (key) {
+Object.keys(_UseMemoCompareApp).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function () {
-      return _MemoCompareApp[key];
+      return _UseMemoCompareApp[key];
     }
   });
 });
 
-var _IntervalApp = require("./IntervalApp");
+var _UseLayoutEffectApp = require("./UseLayoutEffectApp");
 
-Object.keys(_IntervalApp).forEach(function (key) {
+Object.keys(_UseLayoutEffectApp).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function () {
-      return _IntervalApp[key];
+      return _UseLayoutEffectApp[key];
+    }
+  });
+});
+
+var _UseIntervalApp = require("./UseIntervalApp");
+
+Object.keys(_UseIntervalApp).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function () {
+      return _UseIntervalApp[key];
+    }
+  });
+});
+
+var _UsePreviousApp = require("./UsePreviousApp");
+
+Object.keys(_UsePreviousApp).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function () {
+      return _UsePreviousApp[key];
     }
   });
 });
@@ -32896,7 +33096,7 @@ Object.keys(_Home).forEach(function (key) {
     }
   });
 });
-},{"./AsyncApp":"../src/Apps/AsyncApp.tsx","./MemoCompareApp":"../src/Apps/MemoCompareApp.tsx","./IntervalApp":"../src/Apps/IntervalApp.tsx","./Home":"../src/Apps/Home.tsx"}],"../src/styles.scss":[function(require,module,exports) {
+},{"./UseAsyncApp":"../src/Apps/UseAsyncApp.tsx","./UseMemoCompareApp":"../src/Apps/UseMemoCompareApp.tsx","./UseLayoutEffectApp":"../src/Apps/UseLayoutEffectApp.tsx","./UseIntervalApp":"../src/Apps/UseIntervalApp.tsx","./UsePreviousApp":"../src/Apps/UsePreviousApp.tsx","./Home":"../src/Apps/Home.tsx"}],"../src/styles.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -32922,21 +33122,30 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var App = function App() {
+  // TODO: fix linkName and to text redundancy
   var links = [{
-    to: "/",
+    to: "/my-hooks-home",
     component: _Apps.Home,
-    linkName: "home"
+    linkName: "my-hooks-home"
   }, {
     to: "/useAsync",
-    component: _Apps.AsyncApp,
+    component: _Apps.UseAsyncApp,
     linkName: "useAsync"
   }, {
     to: "/useInterval",
-    component: _Apps.IntervalApp,
+    component: _Apps.UseIntervalApp,
     linkName: "useInterval"
   }, {
+    to: "/useLayoutEffect",
+    component: _Apps.UseLayoutEffectApp,
+    linkName: "useLayoutEffect"
+  }, {
+    to: "/usePrevious",
+    component: _Apps.UsePreviousApp,
+    linkName: "usePrevious"
+  }, {
     to: "/useMemoCompare",
-    component: _Apps.MemoCompareApp,
+    component: _Apps.UseMemoCompareApp,
     linkName: "useMemoCompare"
   }];
   return React.createElement(_reactRouterDom.BrowserRouter, null, React.createElement("main", {
@@ -32949,12 +33158,15 @@ var App = function App() {
     }, x.linkName));
   }))), React.createElement(_reactRouterDom.Switch, null, links.map(function (_a, index) {
     var to = _a.to,
+        linkName = _a.linkName,
         Component = _a.component;
     return React.createElement(_reactRouterDom.Route, {
       exact: true,
       path: to,
       key: "route-app-" + index
-    }, React.createElement(Component, null));
+    }, React.createElement("article", {
+      className: "small-app"
+    }, React.createElement("h3", null, linkName), React.createElement(Component, null)));
   }))));
 };
 
@@ -33001,7 +33213,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50056" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58025" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
