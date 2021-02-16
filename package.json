@@ -21,7 +21,7 @@
   "bugs": {
     "url": "https://github.com/dixitk13/my-hooks/issues"
   },
-  "homepage": "https://github.com/dixitk13/my-hooks#readme",
+  "homepage": "https://github.com/dixitk13/my-hooks",
   "dependencies": {
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -29,6 +29,7 @@
     "gh-pages": "^2.2.0"
   },
   "devDependencies": {
+    "@types/node": "^14.14.28",
     "@types/react": "^16.9.42",
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.5",
