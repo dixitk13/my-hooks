@@ -15,13 +15,15 @@ import {
   UsePreviousApp,
   Home,
 } from "./Apps";
+import { UseRenderCountApp } from "./Apps/UseRenderCountApp";
+import { UseTogglerApp } from "./Apps/UseTogglerApp";
 
 import "./styles.scss";
 
 export const App = () => {
   // TODO: fix linkName and to text redundancy
   const links = [
-    { to: "/", component: Home, linkName: "my-hooks-home" },
+    { to: "/", component: Home, linkName: "my-hooks" },
     { to: "/useAsync", component: UseAsyncApp, linkName: "useAsync" },
     {
       to: "/useInterval",
@@ -37,6 +39,16 @@ export const App = () => {
       to: "/usePrevious",
       component: UsePreviousApp,
       linkName: "usePrevious",
+    },
+    {
+      to: "/useRenderCount",
+      component: UseRenderCountApp,
+      linkName: "useRenderCount",
+    },
+    {
+      to: "/useToggler",
+      component: UseTogglerApp,
+      linkName: "useToggler",
     },
     {
       to: "/useMemoCompare",
