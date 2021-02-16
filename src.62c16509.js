@@ -33124,9 +33124,10 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 var App = function App() {
   // TODO: fix linkName and to text redundancy
   var links = [{
-    to: "/home",
+    to: "/",
     component: _Apps.Home,
-    linkName: "my-hooks-home"
+    linkName: "my-hooks-home",
+    exact: true
   }, {
     to: "/useAsync",
     component: _Apps.UseAsyncApp,
@@ -33148,8 +33149,9 @@ var App = function App() {
     component: _Apps.UseMemoCompareApp,
     linkName: "useMemoCompare"
   }];
+  console.log(">>: App.tsx ~ process.env.PUBLIC_URL", undefined);
   return React.createElement(_reactRouterDom.BrowserRouter, {
-    basename: "/my-hooks"
+    basename: undefined
   }, React.createElement("main", {
     className: "app"
   }, React.createElement("header", null, React.createElement("h1", null, "my-hooks")), React.createElement("nav", null, React.createElement("ul", null, links.map(function (x, index) {
@@ -33161,16 +33163,17 @@ var App = function App() {
   }))), React.createElement(_reactRouterDom.Switch, null, links.map(function (_a, index) {
     var to = _a.to,
         linkName = _a.linkName,
-        Component = _a.component;
+        Component = _a.component,
+        exact = _a.exact;
     return React.createElement(_reactRouterDom.Route, {
-      exact: true,
+      exact: exact,
       path: to,
       key: "route-app-" + index
     }, React.createElement("article", {
       className: "small-app"
     }, React.createElement("h3", null, linkName), React.createElement(Component, null)));
   }), React.createElement(_reactRouterDom.Redirect, {
-    to: "/home"
+    to: "/"
   }))));
 };
 
@@ -33217,7 +33220,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52845" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57730" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
