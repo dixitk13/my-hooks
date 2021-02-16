@@ -1,5 +1,11 @@
 import * as React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Switch,
+  Route,
+  Link,
+} from "react-router-dom";
 
 import {
   UseAsyncApp,
@@ -8,7 +14,6 @@ import {
   UseMemoCompareApp,
   UsePreviousApp,
   Home,
-  RedirectToHome,
 } from "./Apps";
 
 import "./styles.scss";
@@ -64,9 +69,7 @@ export const App = () => {
               </article>
             </Route>
           ))}
-          <Route exact path="/" key={`route-app-`}>
-            <RedirectToHome />
-          </Route>
+          <Redirect to="/home" />
         </Switch>
       </main>
     </Router>
