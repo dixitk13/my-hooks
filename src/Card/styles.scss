@@ -4,23 +4,39 @@
   align-items: center;
   border: 1px solid lightcoral;
   border-radius: 3px;
-  width: 100px;
-  height: 100px;
+  width: 150px;
   margin: 5px;
+  padding: 10px;
 
-  .card__title {
-    font-size: 15px;
-    width: 100%;
-    background: lightcoral;
-    text-align: center;
-    margin: 0;
-    border-radius: 3px 3px 0 0;
-    color: rgba(255, 255, 255, 0.8);
+  .card__container {
+    display: flex;
+    flex-direction: column;
+    height: 100px;
+
+    .card__title {
+      font-size: 18px;
+      height: 21px;
+      width: 100%;
+      padding-top: 2px;
+
+      margin: 0;
+      border-radius: 2px 2px 0 0;
+      color: lightcoral;
+    }
+
+    .card__content {
+      font-weight: 600;
+      text-align: center;
+      margin-top: auto;
+      color: rgba(0, 0, 0, 0.7);
+      font-size: 22px;
+    }
   }
 
-  .card__value {
-    font-weight: 600;
-    color: rgba(0, 0, 0, 0.7);
-    font-size: 22px;
+  .card__button {
+    width: 100%;
+    * {
+      width: inherit;
+    }
   }
 }

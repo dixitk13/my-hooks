@@ -20,8 +20,8 @@ export const UsePreviousApp = () => {
         to increment!
       </p>
       <div className="card-list">
-        <Card title="Current" value={count} />
-        <Card title="Previous" value={prevValue} />
+        <Card title="Current">{count}</Card>
+        <Card title="Previous">{prevValue}</Card>
       </div>
       <CodeAccordion code={stringUsePrevious} />
     </>
