@@ -1,18 +1,32 @@
 import * as React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-import { AsyncApp, IntervalApp, MemoCompareApp, Home } from "./Apps";
+import {
+  UseAsyncApp,
+  UseIntervalApp,
+  UseLayoutEffectApp,
+  UseMemoCompareApp,
+  UsePreviousApp,
+  Home,
+} from "./Apps";
 
 import "./styles.scss";
 
 export const App = () => {
+  // TODO: fix linkName and to text redundancy
   const links = [
-    { to: "/", component: Home, linkName: "home" },
-    { to: "/useAsync", component: AsyncApp, linkName: "useAsync" },
-    { to: "/useInterval", component: IntervalApp, linkName: "useInterval" },
+    { to: "/my-hooks-home", component: Home, linkName: "my-hooks-home" },
+    { to: "/useAsync", component: UseAsyncApp, linkName: "useAsync" },
+    { to: "/useInterval", component: UseIntervalApp, linkName: "useInterval" },
+    {
+      to: "/useLayoutEffect",
+      component: UseLayoutEffectApp,
+      linkName: "useLayoutEffect",
+    },
+    { to: "/usePrevious", component: UsePreviousApp, linkName: "usePrevious" },
     {
       to: "/useMemoCompare",
-      component: MemoCompareApp,
+      component: UseMemoCompareApp,
       linkName: "useMemoCompare",
     },
   ];
@@ -32,9 +46,12 @@ export const App = () => {
           </ul>
         </nav>
         <Switch>
-          {links.map(({ to, component: Component }, index) => (
+          {links.map(({ to, linkName, component: Component }, index) => (
             <Route exact path={to} key={`route-app-${index}`}>
-              <Component />
+              <article className="small-app">
+                <h3>{linkName}</h3>
+                <Component />
+              </article>
             </Route>
           ))}
         </Switch>

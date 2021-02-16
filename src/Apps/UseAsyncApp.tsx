@@ -2,12 +2,11 @@ import * as React from "react";
 import { CodeAccordion } from "../CodeAccordion";
 import { useAsync, stringUseAsync, myPromise } from "../hooks";
 
-export const AsyncApp = () => {
+export const UseAsyncApp = () => {
   const { execute, status, value, error } = useAsync(myPromise, false);
 
   return (
-    <article className="small-app">
-      <h3>useAsync</h3>
+    <>
       <p>
         Click
         <button
@@ -24,6 +23,6 @@ export const AsyncApp = () => {
       {status === "success" && <div>{value}</div>}
       {status === "error" && <div>{error}</div>}
       <CodeAccordion code={stringUseAsync} />
-    </article>
+    </>
   );
 };
