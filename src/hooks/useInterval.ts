@@ -1,47 +1,42 @@
 import { useEffect, useRef } from "react";
 
-export const useInterval = (
-  fn: Function,
-  delay: number = 500,
-  deps: React.DependencyList = []
-) => {
-  const timeoutId = useRef<number | undefined>();
+// ref: https://overreacted.io/making-setinterval-declarative-with-react-hooks/
+export function useInterval(callback: Function, delay: number | undefined) {
+  const savedCallback = useRef<Function>();
 
   useEffect(() => {
-    if (!fn) return;
+    savedCallback.current = callback;
+  });
 
-    if (timeoutId.current) clearInterval(timeoutId.current);
+  useEffect(() => {
+    if (!delay) return;
 
-    if (delay !== null && delay !== undefined) {
-      timeoutId.current = setInterval(fn, delay);
+    function tick() {
+      savedCallback?.current?.();
     }
 
-    return () => clearInterval(timeoutId.current);
-  }, [delay, ...deps]);
-
-  return fn;
-};
+    let id = setInterval(tick, delay);
+    return () => clearInterval(id);
+  }, [delay]);
+}
 
 export const stringUseInterval = `
-export const useInterval = (
-  fn: Function,
-  delay: number = 500,
-  deps: React.DependencyList = []
-) => {
-  const timeoutId = useRef<number | undefined>();
+export function useInterval(callback: Function, delay: number | undefined) {
+  const savedCallback = useRef<Function>();
 
   useEffect(() => {
-    if (!fn) return;
+    savedCallback.current = callback;
+  });
 
-    if (timeoutId.current) clearInterval(timeoutId.current);
+  useEffect(() => {
+    if (!delay) return;
 
-    if (delay !== null && delay !== undefined) {
-      timeoutId.current = setInterval(fn, delay);
+    function tick() {
+      savedCallback?.current?.();
     }
 
-    return () => clearInterval(timeoutId.current);
-  }, [delay, ...deps]);
-
-  return fn;
-};
+    let id = setInterval(tick, delay);
+    return () => clearInterval(id);
+  }, [delay]);
+}
 `;
