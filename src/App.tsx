@@ -46,7 +46,7 @@ export const App = () => {
   ];
 
   return (
-    <Router>
+    <Router basename="my-hooks">
       <main className="app">
         <header>
           <h1>my-hooks</h1>
@@ -69,7 +69,6 @@ export const App = () => {
               </article>
             </Route>
           ))}
-          <Redirect to="/" />
         </Switch>
       </main>
     </Router>
