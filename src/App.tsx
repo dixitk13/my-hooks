@@ -8,6 +8,7 @@ import {
   UseLayoutEffectApp,
   UseMemoCompareApp,
   UsePreviousApp,
+  UseMemoApp,
   Home,
 } from "./Apps";
 import { UseRenderCountApp } from "./Apps/UseRenderCountApp";
@@ -30,6 +31,11 @@ export const App = () => {
       to: "/useLayoutEffect",
       component: UseLayoutEffectApp,
       linkName: "useLayoutEffect",
+    },
+    {
+      to: "/useMemo",
+      component: UseMemoApp,
+      linkName: "useMemo",
     },
     {
       to: "/usePrevious",
