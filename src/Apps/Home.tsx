@@ -4,7 +4,7 @@ export const Home = () => {
   return (
     <>
       <p>contains some hooks which have been either:</p>
-      <ul>
+      <ul className="home-links">
         <li>
           inspired from{" "}
           <a href="https://usehooks.com/" rel="noopener noreferrer">
@@ -12,6 +12,12 @@ export const Home = () => {
           </a>
         </li>
         <li>i've created or used in other projects</li>
+        <li>
+          or learnt from{" "}
+          <a href="https://overreacted.io" rel="noopener noreferrer">
+            dan's blog
+          </a>
+        </li>
       </ul>
     </>
   );

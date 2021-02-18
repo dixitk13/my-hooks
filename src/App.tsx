@@ -1,14 +1,9 @@
 import * as React from "react";
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Switch,
-  Route,
-  Link,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import {
   UseAsyncApp,
+  UseContextApp,
   UseIntervalApp,
   UseLayoutEffectApp,
   UseMemoCompareApp,
@@ -25,6 +20,7 @@ export const App = () => {
   const links = [
     { to: "/", component: Home, linkName: "my-hooks" },
     { to: "/useAsync", component: UseAsyncApp, linkName: "useAsync" },
+    { to: "/useContext", component: UseContextApp, linkName: "useContext" },
     {
       to: "/useInterval",
       component: UseIntervalApp,
