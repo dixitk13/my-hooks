@@ -3,6 +3,31 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  .home-links {
+    list-style-type: none;
+    position: relative;
+    li {
+      height: 33px;
+      margin: 4px 12px 4px 0;
+      &:first-child {
+        &:before {
+          content: "~~";
+          padding: 5px;
+        }
+      }
+      &:before {
+        // list-style-image: "OR";
+        content: "OR";
+        padding: 5px 3px;
+        margin-right: 3px;
+        height: 20px;
+        background-color: lightcoral;
+        color: rgba(0, 0, 0, 0.8);
+        border-radius: 50%;
+        vertical-align: middle;
+      }
+    }
+  }
   .small-app {
     width: 100%;
     @media (min-width: 1025px) {

@@ -1,19 +1,16 @@
 import * as React from "react";
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Switch,
-  Route,
-  Link,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import {
   UseAsyncApp,
+  UseContextApp,
   UseIntervalApp,
   UseLayoutEffectApp,
   UseMemoCompareApp,
   UsePreviousApp,
+  UseMemoApp,
   Home,
+  UseCallbackApp,
 } from "./Apps";
 import { UseRenderCountApp } from "./Apps/UseRenderCountApp";
 import { UseTogglerApp } from "./Apps/UseTogglerApp";
@@ -25,6 +22,8 @@ export const App = () => {
   const links = [
     { to: "/", component: Home, linkName: "my-hooks" },
     { to: "/useAsync", component: UseAsyncApp, linkName: "useAsync" },
+    { to: "/useContext", component: UseContextApp, linkName: "useContext" },
+    { to: "/useCallback", component: UseCallbackApp, linkName: "useCallback" },
     {
       to: "/useInterval",
       component: UseIntervalApp,
@@ -34,6 +33,11 @@ export const App = () => {
       to: "/useLayoutEffect",
       component: UseLayoutEffectApp,
       linkName: "useLayoutEffect",
+    },
+    {
+      to: "/useMemo",
+      component: UseMemoApp,
+      linkName: "useMemo",
     },
     {
       to: "/usePrevious",
