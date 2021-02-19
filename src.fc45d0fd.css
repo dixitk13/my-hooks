@@ -30,6 +30,29 @@
   width: 150px;
   margin: 5px;
   padding: 10px;
+  position: relative;
+}
+.card.xl-card {
+  width: 250px;
+  height: 250px;
+}
+.card.mn-card {
+  width: 25px;
+  height: 25px;
+}
+.card.mn-card .card__container .card__title {
+  font-size: 15px;
+}
+.card .counter {
+  position: absolute;
+  right: -8px;
+  top: -24px;
+  color: rgba(255, 255, 255, 0.7);
+  background-color: salmon;
+  border-radius: 50%;
+  padding: 0 6px;
+  font-size: 18px;
+  font-weight: 600;
 }
 .card .card__container {
   display: flex;
@@ -46,7 +69,6 @@
   color: lightcoral;
 }
 .card .card__container .card__content {
-  font-weight: 600;
   text-align: center;
   margin-top: auto;
   color: rgba(0, 0, 0, 0.7);
@@ -63,6 +85,28 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.app .home-links {
+  list-style-type: none;
+  position: relative;
+}
+.app .home-links li {
+  height: 33px;
+  margin: 4px 12px 4px 0;
+}
+.app .home-links li:first-child:before {
+  content: "~~";
+  padding: 5px;
+}
+.app .home-links li:before {
+  content: "OR";
+  padding: 5px 3px;
+  margin-right: 3px;
+  height: 20px;
+  background-color: lightcoral;
+  color: rgba(0, 0, 0, 0.8);
+  border-radius: 50%;
+  vertical-align: middle;
 }
 .app .small-app {
   width: 100%;

@@ -32836,7 +32836,167 @@ var UseAsyncApp = function UseAsyncApp() {
 };
 
 exports.UseAsyncApp = UseAsyncApp;
-},{"react":"node_modules/react/index.js","../CodeAccordion":"src/CodeAccordion/index.ts","../hooks":"src/hooks/index.ts"}],"src/Apps/UseMemoCompareApp.tsx":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","../CodeAccordion":"src/CodeAccordion/index.ts","../hooks":"src/hooks/index.ts"}],"src/Card/styles.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"src/Card/Card.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Card = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+var _hooks = require("../hooks");
+
+require("./styles.scss");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var Card = function Card(_a) {
+  var title = _a.title,
+      actionButton = _a.actionButton,
+      children = _a.children,
+      size = _a.size,
+      enableRenderCount = _a.enableRenderCount;
+  var count = (0, _hooks.useRenderCount)();
+  console.log(">>: Card title=" + title + " count=" + count);
+  return React.createElement(React.Fragment, null, React.createElement("section", {
+    className: "card " + (size === "large" && "xl-card") + " " + (size === "mini" && "mn-card")
+  }, enableRenderCount && React.createElement("p", {
+    className: "counter"
+  }, count), React.createElement("div", {
+    className: "card__container"
+  }, React.createElement("p", {
+    className: "card__title"
+  }, title), React.createElement("div", {
+    className: "card__content"
+  }, children)), React.createElement("div", {
+    className: "card__button"
+  }, actionButton)));
+};
+
+exports.Card = Card;
+},{"react":"node_modules/react/index.js","../hooks":"src/hooks/index.ts","./styles.scss":"src/Card/styles.scss"}],"src/Card/index.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _Card = require("./Card");
+
+Object.keys(_Card).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function () {
+      return _Card[key];
+    }
+  });
+});
+},{"./Card":"src/Card/Card.tsx"}],"src/Apps/UseContextApp.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.UseContextApp = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+var _Card = require("../Card");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var ThemeContext = React.createContext({});
+
+var UseContextApp = function UseContextApp() {
+  return React.createElement(ThemeWrapperApp, null, React.createElement(Radios, null), React.createElement(Status, null), React.createElement(_Card.Card, {
+    title: "Child #1",
+    size: "large",
+    enableRenderCount: true
+  }, React.createElement(_Card.Card, {
+    title: "Child #2",
+    enableRenderCount: true
+  }, React.createElement(ChildWithContext, null))));
+};
+
+exports.UseContextApp = UseContextApp;
+
+var Status = function Status() {
+  var theme = React.useContext(ThemeContext).theme;
+  return React.createElement("div", {
+    className: "status-bar"
+  }, "VALUE: ", String(theme));
+};
+
+var ThemeWrapperApp = function ThemeWrapperApp(_a) {
+  var children = _a.children;
+
+  var _b = React.useState("light"),
+      theme = _b[0],
+      setTheme = _b[1];
+
+  return React.createElement(ThemeContext.Provider, {
+    value: {
+      theme: theme,
+      setTheme: setTheme
+    }
+  }, children);
+};
+
+var Radios = function Radios() {
+  var _a = React.useContext(ThemeContext),
+      theme = _a.theme,
+      setTheme = _a.setTheme;
+
+  return React.createElement(React.Fragment, null, React.createElement("p", null, "Click to toggle theme."), React.createElement("p", null, "The child cards indicate if they got rendered with a count specified in the top right corner. Child-N is the last child which renders because its part of the child which is actually consuming the context"), React.createElement("div", null, React.createElement("input", {
+    type: "radio",
+    id: "light",
+    name: "theme",
+    value: "light",
+    onChange: function onChange(e) {
+      var _a;
+
+      return setTheme === null || setTheme === void 0 ? void 0 : setTheme((_a = e === null || e === void 0 ? void 0 : e.target) === null || _a === void 0 ? void 0 : _a.value);
+    },
+    checked: theme === "light"
+  }), React.createElement("label", {
+    htmlFor: "light"
+  }, "light")), React.createElement("div", null, React.createElement("input", {
+    type: "radio",
+    id: "dark",
+    checked: theme === "dark",
+    name: "theme",
+    value: "dark",
+    onChange: function onChange(e) {
+      var _a;
+
+      return setTheme === null || setTheme === void 0 ? void 0 : setTheme((_a = e === null || e === void 0 ? void 0 : e.target) === null || _a === void 0 ? void 0 : _a.value);
+    }
+  }), React.createElement("label", {
+    htmlFor: "dark"
+  }, "dark")));
+};
+
+var ChildWithContext = function ChildWithContext() {
+  var theme = React.useContext(ThemeContext).theme;
+  return React.createElement(React.Fragment, null, React.createElement("span", null, theme), React.createElement(_Card.Card, {
+    title: "Child-N",
+    size: "mini",
+    enableRenderCount: true
+  }));
+};
+},{"react":"node_modules/react/index.js","../Card":"src/Card/index.ts"}],"src/Apps/UseMemoCompareApp.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32855,64 +33015,72 @@ var UseMemoCompareApp = function UseMemoCompareApp() {
 };
 
 exports.UseMemoCompareApp = UseMemoCompareApp;
-},{"react":"node_modules/react/index.js"}],"src/Card/styles.scss":[function(require,module,exports) {
-var reloadCSS = require('_css_loader');
-
-module.hot.dispose(reloadCSS);
-module.hot.accept(reloadCSS);
-},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"src/Card/Card.tsx":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js"}],"src/Apps/UseCallbackApp.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Card = void 0;
+exports.UseCallbackApp = void 0;
 
 var React = _interopRequireWildcard(require("react"));
 
-require("./styles.scss");
+var _Card = require("../Card");
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-var Card = function Card(_a) {
-  var title = _a.title,
-      actionButton = _a.actionButton,
-      children = _a.children;
-  return React.createElement(React.Fragment, null, React.createElement("section", {
-    className: "card"
-  }, React.createElement("div", {
-    className: "card__container"
-  }, React.createElement("p", {
-    className: "card__title"
-  }, title), React.createElement("p", {
-    className: "card__content"
-  }, children)), React.createElement("div", {
-    className: "card__button"
-  }, actionButton)));
+var UseCallbackApp = function UseCallbackApp() {
+  return React.createElement(React.Fragment, null, React.createElement("p", null, "Click both buttons to play with UseCallbackApp"), React.createElement("div", {
+    className: "card-list"
+  }, React.createElement(NonCallbackApp, null), React.createElement(CallbackApp, null)));
 };
 
-exports.Card = Card;
-},{"react":"node_modules/react/index.js","./styles.scss":"src/Card/styles.scss"}],"src/Card/index.ts":[function(require,module,exports) {
-"use strict";
+exports.UseCallbackApp = UseCallbackApp;
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+var NonCallbackApp = function NonCallbackApp() {
+  var _a = React.useState(0),
+      setVal = _a[1];
 
-var _Card = require("./Card");
+  var setter = function setter() {
+    setVal(Math.random() * 1);
+  };
 
-Object.keys(_Card).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function () {
-      return _Card[key];
-    }
+  return React.createElement(PureCard, {
+    title: "Non-callback Card",
+    text: "\uD83D\uDC7B",
+    fn: setter
+  });
+};
+
+var CallbackApp = function CallbackApp() {
+  var _a = React.useState(0),
+      setVal = _a[1];
+
+  var setter = React.useCallback(function () {
+    setVal(Math.random() * 1);
+  }, []);
+  return React.createElement(PureCard, {
+    text: "\uD83D\uDC7D",
+    title: "Callback Card",
+    fn: setter
+  });
+};
+
+var PureCard = React.memo(function (_a) {
+  var fn = _a.fn,
+      title = _a.title,
+      text = _a.text;
+  return React.createElement(_Card.Card, {
+    title: title,
+    enableRenderCount: true,
+    actionButton: React.createElement("button", {
+      onClick: fn
+    }, text)
   });
 });
-},{"./Card":"src/Card/Card.tsx"}],"src/Apps/UseLayoutEffectApp.tsx":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","../Card":"src/Card/index.ts"}],"src/Apps/UseLayoutEffectApp.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33064,7 +33232,72 @@ var UsePreviousApp = function UsePreviousApp() {
 };
 
 exports.UsePreviousApp = UsePreviousApp;
-},{"react":"node_modules/react/index.js","../hooks/usePrevious":"src/hooks/usePrevious.ts","../Card":"src/Card/index.ts","../CodeAccordion":"src/CodeAccordion/index.ts"}],"src/Apps/Home.tsx":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","../hooks/usePrevious":"src/hooks/usePrevious.ts","../Card":"src/Card/index.ts","../CodeAccordion":"src/CodeAccordion/index.ts"}],"src/Apps/UseMemoApp.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.UseMemoApp = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var UseMemoApp = function UseMemoApp() {
+  var ref = React.useRef(0);
+
+  var _a = React.useState(""),
+      str = _a[0],
+      setStr = _a[1];
+
+  var lst = [{
+    value: "tom"
+  }, {
+    value: "peter"
+  }, {
+    value: "tommy"
+  }, {
+    value: "pedro"
+  }, {
+    value: "pascal"
+  }, {
+    value: "nounce"
+  }, {
+    value: "fox"
+  }, {
+    value: "foxy"
+  }, {
+    value: "oxymoron"
+  }];
+  var filteredList = React.useMemo(function () {
+    ref.current++;
+    if (!str) return lst;
+    return lst.filter(function (x) {
+      return x.value.includes(str);
+    });
+  }, [str]);
+  return React.createElement(React.Fragment, null, React.createElement("p", null, "type to play with useMemo"), React.createElement("p", null, "if you type same key-words for search, see how computation doesn't happen again and a cached value is returned"), React.createElement("div", {
+    className: "status-bar"
+  }, "COMPUTED: $", ref === null || ref === void 0 ? void 0 : ref.current), React.createElement("br", null), React.createElement("input", {
+    type: "text",
+    onChange: function onChange(e) {
+      var _a;
+
+      return setStr((_a = e === null || e === void 0 ? void 0 : e.target) === null || _a === void 0 ? void 0 : _a.value);
+    },
+    placeholder: "enter search string"
+  }), React.createElement("ul", null, filteredList.map(function (x, indx) {
+    return React.createElement("li", {
+      key: "filtered-list-" + indx
+    }, x.value);
+  })));
+};
+
+exports.UseMemoApp = UseMemoApp;
+},{"react":"node_modules/react/index.js"}],"src/Apps/Home.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33079,10 +33312,15 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var Home = function Home() {
-  return React.createElement(React.Fragment, null, React.createElement("p", null, "contains some hooks which have been either:"), React.createElement("ul", null, React.createElement("li", null, "inspired from", " ", React.createElement("a", {
+  return React.createElement(React.Fragment, null, React.createElement("p", null, "contains some hooks which have been either:"), React.createElement("ul", {
+    className: "home-links"
+  }, React.createElement("li", null, "inspired from", " ", React.createElement("a", {
     href: "https://usehooks.com/",
     rel: "noopener noreferrer"
-  }, "usehooks")), React.createElement("li", null, "i've created or used in other projects")));
+  }, "usehooks")), React.createElement("li", null, "i've created or used in other projects"), React.createElement("li", null, "or learnt from", " ", React.createElement("a", {
+    href: "https://overreacted.io",
+    rel: "noopener noreferrer"
+  }, "dan's blog"))));
 };
 
 exports.Home = Home;
@@ -33105,6 +33343,18 @@ Object.keys(_UseAsyncApp).forEach(function (key) {
   });
 });
 
+var _UseContextApp = require("./UseContextApp");
+
+Object.keys(_UseContextApp).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function () {
+      return _UseContextApp[key];
+    }
+  });
+});
+
 var _UseMemoCompareApp = require("./UseMemoCompareApp");
 
 Object.keys(_UseMemoCompareApp).forEach(function (key) {
@@ -33113,6 +33363,18 @@ Object.keys(_UseMemoCompareApp).forEach(function (key) {
     enumerable: true,
     get: function () {
       return _UseMemoCompareApp[key];
+    }
+  });
+});
+
+var _UseCallbackApp = require("./UseCallbackApp");
+
+Object.keys(_UseCallbackApp).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function () {
+      return _UseCallbackApp[key];
     }
   });
 });
@@ -33153,6 +33415,18 @@ Object.keys(_UsePreviousApp).forEach(function (key) {
   });
 });
 
+var _UseMemoApp = require("./UseMemoApp");
+
+Object.keys(_UseMemoApp).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function () {
+      return _UseMemoApp[key];
+    }
+  });
+});
+
 var _Home = require("./Home");
 
 Object.keys(_Home).forEach(function (key) {
@@ -33164,7 +33438,7 @@ Object.keys(_Home).forEach(function (key) {
     }
   });
 });
-},{"./UseAsyncApp":"src/Apps/UseAsyncApp.tsx","./UseMemoCompareApp":"src/Apps/UseMemoCompareApp.tsx","./UseLayoutEffectApp":"src/Apps/UseLayoutEffectApp.tsx","./UseIntervalApp":"src/Apps/UseIntervalApp.tsx","./UsePreviousApp":"src/Apps/UsePreviousApp.tsx","./Home":"src/Apps/Home.tsx"}],"src/Apps/UseRenderCountApp.tsx":[function(require,module,exports) {
+},{"./UseAsyncApp":"src/Apps/UseAsyncApp.tsx","./UseContextApp":"src/Apps/UseContextApp.tsx","./UseMemoCompareApp":"src/Apps/UseMemoCompareApp.tsx","./UseCallbackApp":"src/Apps/UseCallbackApp.tsx","./UseLayoutEffectApp":"src/Apps/UseLayoutEffectApp.tsx","./UseIntervalApp":"src/Apps/UseIntervalApp.tsx","./UsePreviousApp":"src/Apps/UsePreviousApp.tsx","./UseMemoApp":"src/Apps/UseMemoApp.tsx","./Home":"src/Apps/Home.tsx"}],"src/Apps/UseRenderCountApp.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33297,6 +33571,14 @@ var App = function App() {
     component: _Apps.UseAsyncApp,
     linkName: "useAsync"
   }, {
+    to: "/useContext",
+    component: _Apps.UseContextApp,
+    linkName: "useContext"
+  }, {
+    to: "/useCallback",
+    component: _Apps.UseCallbackApp,
+    linkName: "useCallback"
+  }, {
     to: "/useInterval",
     component: _Apps.UseIntervalApp,
     linkName: "useInterval"
@@ -33304,6 +33586,10 @@ var App = function App() {
     to: "/useLayoutEffect",
     component: _Apps.UseLayoutEffectApp,
     linkName: "useLayoutEffect"
+  }, {
+    to: "/useMemo",
+    component: _Apps.UseMemoApp,
+    linkName: "useMemo"
   }, {
     to: "/usePrevious",
     component: _Apps.UsePreviousApp,
@@ -33388,7 +33674,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60598" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53161" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
