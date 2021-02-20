@@ -33025,6 +33025,8 @@ exports.UseCallbackApp = void 0;
 
 var React = _interopRequireWildcard(require("react"));
 
+var _CodeAccordion = require("../CodeAccordion");
+
 var _Card = require("../Card");
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
@@ -33034,7 +33036,9 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 var UseCallbackApp = function UseCallbackApp() {
   return React.createElement(React.Fragment, null, React.createElement("p", null, "Click both buttons to play with UseCallbackApp"), React.createElement("div", {
     className: "card-list"
-  }, React.createElement(NonCallbackApp, null), React.createElement(CallbackApp, null)));
+  }, React.createElement(NonCallbackApp, null), React.createElement(CallbackApp, null)), React.createElement(_CodeAccordion.CodeAccordion, {
+    code: stringCallbackCode
+  }));
 };
 
 exports.UseCallbackApp = UseCallbackApp;
@@ -33063,7 +33067,7 @@ var CallbackApp = function CallbackApp() {
   }, []);
   return React.createElement(PureCard, {
     text: "\uD83D\uDC7D",
-    title: "Callback Card",
+    title: "With Callback Card",
     fn: setter
   });
 };
@@ -33080,7 +33084,8 @@ var PureCard = React.memo(function (_a) {
     }, text)
   });
 });
-},{"react":"node_modules/react/index.js","../Card":"src/Card/index.ts"}],"src/Apps/UseLayoutEffectApp.tsx":[function(require,module,exports) {
+var stringCallbackCode = "\nconst NonCallbackApp = () => {\n  const [, setVal] = React.useState<number>(0);\n  const setter = () => {\n    setVal(Math.random() * 1);\n  };\n\n  return (\n    <PureCard \n      title=\"Non-callback Card\" \n      text=\"\uD83D\uDC7B\" \n      fn={setter} \n    />\n  );\n};\n\nconst CallbackApp = () => {\n  const [, setVal] = React.useState<number>(0);\n  const setter = React.useCallback(() => {\n    setVal(Math.random() * 1);\n  }, []);\n\n  return (\n    <PureCard \n      text=\"\uD83D\uDC7D\" \n      title=\"Callback Card\" \n      fn={setter} \n    />\n  );\n};\n";
+},{"react":"node_modules/react/index.js","../CodeAccordion":"src/CodeAccordion/index.ts","../Card":"src/Card/index.ts"}],"src/Apps/UseLayoutEffectApp.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33247,7 +33252,8 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var UseMemoApp = function UseMemoApp() {
-  var ref = React.useRef(0);
+  var countRef = React.useRef(0);
+  var ref = React.useRef();
 
   var _a = React.useState(""),
       str = _a[0],
@@ -33271,17 +33277,30 @@ var UseMemoApp = function UseMemoApp() {
     value: "foxy"
   }, {
     value: "oxymoron"
-  }];
-  var filteredList = React.useMemo(function () {
-    ref.current++;
-    if (!str) return lst;
-    return lst.filter(function (x) {
-      return x.value.includes(str);
-    });
+  }]; // this is a get on-purpose to find ref equality?
+
+  var getFilteredList = React.useMemo(function () {
+    return function () {
+      if (!str) return lst;
+      return lst.filter(function (x) {
+        return x.value.includes(str);
+      });
+    };
+  }, [str]);
+  React.useEffect(function () {
+    var _a, _b, _c, _d;
+
+    console.log(">>: re-cal?", getFilteredList, ((_a = ref.current) === null || _a === void 0 ? void 0 : _a.get(str)) === getFilteredList);
+
+    if (((_b = ref.current) === null || _b === void 0 ? void 0 : _b.has(str)) && ((_c = ref.current) === null || _c === void 0 ? void 0 : _c.get(str)) === getFilteredList) {
+      countRef.current++;
+    } else {
+      (_d = ref.current) === null || _d === void 0 ? void 0 : _d.set(str, getFilteredList);
+    }
   }, [str]);
   return React.createElement(React.Fragment, null, React.createElement("p", null, "type to play with useMemo"), React.createElement("p", null, "if you type same key-words for search, see how computation doesn't happen again and a cached value is returned"), React.createElement("div", {
     className: "status-bar"
-  }, "COMPUTED: $", ref === null || ref === void 0 ? void 0 : ref.current), React.createElement("br", null), React.createElement("input", {
+  }, "COMPUTED: $", countRef === null || countRef === void 0 ? void 0 : countRef.current), React.createElement("br", null), React.createElement("input", {
     type: "text",
     onChange: function onChange(e) {
       var _a;
@@ -33289,7 +33308,7 @@ var UseMemoApp = function UseMemoApp() {
       return setStr((_a = e === null || e === void 0 ? void 0 : e.target) === null || _a === void 0 ? void 0 : _a.value);
     },
     placeholder: "enter search string"
-  }), React.createElement("ul", null, filteredList.map(function (x, indx) {
+  }), React.createElement("ul", null, getFilteredList().map(function (x, indx) {
     return React.createElement("li", {
       key: "filtered-list-" + indx
     }, x.value);
@@ -33320,7 +33339,7 @@ var Home = function Home() {
   }, "usehooks")), React.createElement("li", null, "i've created or used in other projects"), React.createElement("li", null, "or learnt from", " ", React.createElement("a", {
     href: "https://overreacted.io",
     rel: "noopener noreferrer"
-  }, "dan's blog"))));
+  }, "dan's blog")), React.createElement("li", null, "or stackoverflow ;)")));
 };
 
 exports.Home = Home;
@@ -33674,7 +33693,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53161" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56988" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
