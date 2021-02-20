@@ -1,7 +1,9 @@
 import * as React from "react";
 
 export const UseMemoApp = () => {
-  const ref = React.useRef<number>(0);
+  const countRef = React.useRef<number>(0);
+  const ref = React.useRef<Map<string, Function>>();
+
   const [str, setStr] = React.useState<string>("");
 
   const lst = [
@@ -16,11 +18,26 @@ export const UseMemoApp = () => {
     { value: "oxymoron" },
   ];
 
-  const filteredList = React.useMemo(() => {
-    ref.current++;
-    if (!str) return lst;
+  // this is a get on-purpose to find ref equality?
+  const getFilteredList = React.useMemo(() => {
+    return () => {
+      if (!str) return lst;
 
-    return lst.filter((x) => x.value.includes(str));
+      return lst.filter((x) => x.value.includes(str));
+    };
+  }, [str]);
+
+  React.useEffect(() => {
+    console.log(
+      ">>: re-cal?",
+      getFilteredList,
+      ref.current?.get(str) === getFilteredList
+    );
+    if (ref.current?.has(str) && ref.current?.get(str) === getFilteredList) {
+      countRef.current++;
+    } else {
+      ref.current?.set(str, getFilteredList);
+    }
   }, [str]);
 
   return (
@@ -30,7 +47,7 @@ export const UseMemoApp = () => {
         if you type same key-words for search, see how computation doesn't
         happen again and a cached value is returned
       </p>
-      <div className="status-bar">COMPUTED: ${ref?.current}</div>
+      <div className="status-bar">COMPUTED: ${countRef?.current}</div>
       <br></br>
       <input
         type="text"
@@ -38,7 +55,7 @@ export const UseMemoApp = () => {
         placeholder="enter search string"
       />
       <ul>
-        {filteredList.map((x, indx) => (
+        {getFilteredList().map((x, indx) => (
           <li key={`filtered-list-${indx}`}>{x.value}</li>
         ))}
       </ul>
