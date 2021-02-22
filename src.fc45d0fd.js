@@ -32851,8 +32851,6 @@ exports.Card = void 0;
 
 var React = _interopRequireWildcard(require("react"));
 
-var _hooks = require("../hooks");
-
 require("./styles.scss");
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
@@ -32864,14 +32862,14 @@ var Card = function Card(_a) {
       actionButton = _a.actionButton,
       children = _a.children,
       size = _a.size,
-      enableRenderCount = _a.enableRenderCount;
-  var count = (0, _hooks.useRenderCount)();
-  console.log(">>: Card title=" + title + " count=" + count);
+      enableRenderCount = _a.enableRenderCount; // const count = useRenderCount();
+
+  console.log(">>: Card title=" + title + " count=");
   return React.createElement(React.Fragment, null, React.createElement("section", {
     className: "card " + (size === "large" && "xl-card") + " " + (size === "mini" && "mn-card")
   }, enableRenderCount && React.createElement("p", {
     className: "counter"
-  }, count), React.createElement("div", {
+  }), React.createElement("div", {
     className: "card__container"
   }, React.createElement("p", {
     className: "card__title"
@@ -32883,7 +32881,7 @@ var Card = function Card(_a) {
 };
 
 exports.Card = Card;
-},{"react":"node_modules/react/index.js","../hooks":"src/hooks/index.ts","./styles.scss":"src/Card/styles.scss"}],"src/Card/index.ts":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","./styles.scss":"src/Card/styles.scss"}],"src/Card/index.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33034,6 +33032,7 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var UseCallbackApp = function UseCallbackApp() {
+  console.log(">>: UseCallbackApp Main");
   return React.createElement(React.Fragment, null, React.createElement("p", null, "Click both buttons to play with UseCallbackApp"), React.createElement("div", {
     className: "card-list"
   }, React.createElement(NonCallbackApp, null), React.createElement(CallbackApp, null)), React.createElement(_CodeAccordion.CodeAccordion, {
@@ -33051,10 +33050,12 @@ var NonCallbackApp = function NonCallbackApp() {
     setVal(Math.random() * 1);
   };
 
-  return React.createElement(PureCard, {
+  return React.createElement(_Card.Card, {
     title: "Non-callback Card",
-    text: "\uD83D\uDC7B",
-    fn: setter
+    enableRenderCount: true,
+    actionButton: React.createElement("button", {
+      onClick: setter
+    }, "\uD83D\uDC7B")
   });
 };
 
@@ -33065,10 +33066,17 @@ var CallbackApp = function CallbackApp() {
   var setter = React.useCallback(function () {
     setVal(Math.random() * 1);
   }, []);
-  return React.createElement(PureCard, {
-    text: "\uD83D\uDC7D",
+  console.log(">>: CallbackApp");
+  var btn = React.useMemo(function () {
+    return React.createElement("button", {
+      onClick: setter
+    }, "\uD83D\uDC7D");
+  }, []); // return <Card text="👽" title="With Callback Card" fn={setter} />;
+
+  return React.createElement(_Card.Card, {
     title: "With Callback Card",
-    fn: setter
+    enableRenderCount: true,
+    actionButton: btn
   });
 };
 
@@ -33693,7 +33701,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56988" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54926" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
