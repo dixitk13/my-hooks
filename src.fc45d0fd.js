@@ -32851,6 +32851,8 @@ exports.Card = void 0;
 
 var React = _interopRequireWildcard(require("react"));
 
+var _hooks = require("../hooks");
+
 require("./styles.scss");
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
@@ -32862,14 +32864,14 @@ var Card = function Card(_a) {
       actionButton = _a.actionButton,
       children = _a.children,
       size = _a.size,
-      enableRenderCount = _a.enableRenderCount; // const count = useRenderCount();
-
-  console.log(">>: Card title=" + title + " count=");
+      enableRenderCount = _a.enableRenderCount;
+  var count = (0, _hooks.useRenderCount)();
+  console.log(">>: Card title=" + title + " count=" + count);
   return React.createElement(React.Fragment, null, React.createElement("section", {
     className: "card " + (size === "large" && "xl-card") + " " + (size === "mini" && "mn-card")
   }, enableRenderCount && React.createElement("p", {
     className: "counter"
-  }), React.createElement("div", {
+  }, count), React.createElement("div", {
     className: "card__container"
   }, React.createElement("p", {
     className: "card__title"
@@ -32881,7 +32883,7 @@ var Card = function Card(_a) {
 };
 
 exports.Card = Card;
-},{"react":"node_modules/react/index.js","./styles.scss":"src/Card/styles.scss"}],"src/Card/index.ts":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","../hooks":"src/hooks/index.ts","./styles.scss":"src/Card/styles.scss"}],"src/Card/index.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32994,7 +32996,53 @@ var ChildWithContext = function ChildWithContext() {
     enableRenderCount: true
   }));
 };
-},{"react":"node_modules/react/index.js","../Card":"src/Card/index.ts"}],"src/Apps/UseMemoCompareApp.tsx":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","../Card":"src/Card/index.ts"}],"src/Apps/UseDebugValues.tsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.UseDebugValues = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+var _hooks = require("../hooks");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var animals = ["dog", "cat", "elephant", "fox"];
+
+function useMyState1(def) {
+  var props = React.useState(def);
+  React.useDebugValue(props[0], function (val) {
+    return "my-" + val;
+  });
+  React.useDebugValue(new Date(), function (date) {
+    return date.toString();
+  });
+  return props;
+}
+
+var UseDebugValues = function UseDebugValues() {
+  var _a = useMyState1("dog"),
+      setState = _a[1];
+
+  var count = (0, _hooks.useRenderCount)();
+  React.useEffect(function () {
+    setState("cat");
+  }, []);
+  return React.createElement(React.Fragment, null, React.createElement("p", null, "Open devtools to see the debug values"), React.createElement("p", null, "Chooses animal from [", animals.join(", "), "]"), React.createElement("button", {
+    className: "start-btn",
+    onClick: function onClick() {
+      return setState(animals[count % animals.length]);
+    }
+  }, "Change Animal"));
+};
+
+exports.UseDebugValues = UseDebugValues;
+},{"react":"node_modules/react/index.js","../hooks":"src/hooks/index.ts"}],"src/Apps/UseMemoCompareApp.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33032,7 +33080,6 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var UseCallbackApp = function UseCallbackApp() {
-  console.log(">>: UseCallbackApp Main");
   return React.createElement(React.Fragment, null, React.createElement("p", null, "Click both buttons to play with UseCallbackApp"), React.createElement("div", {
     className: "card-list"
   }, React.createElement(NonCallbackApp, null), React.createElement(CallbackApp, null)), React.createElement(_CodeAccordion.CodeAccordion, {
@@ -33050,12 +33097,10 @@ var NonCallbackApp = function NonCallbackApp() {
     setVal(Math.random() * 1);
   };
 
-  return React.createElement(_Card.Card, {
+  return React.createElement(PureCard, {
     title: "Non-callback Card",
-    enableRenderCount: true,
-    actionButton: React.createElement("button", {
-      onClick: setter
-    }, "\uD83D\uDC7B")
+    text: "\uD83D\uDC7B",
+    fn: setter
   });
 };
 
@@ -33066,17 +33111,10 @@ var CallbackApp = function CallbackApp() {
   var setter = React.useCallback(function () {
     setVal(Math.random() * 1);
   }, []);
-  console.log(">>: CallbackApp");
-  var btn = React.useMemo(function () {
-    return React.createElement("button", {
-      onClick: setter
-    }, "\uD83D\uDC7D");
-  }, []); // return <Card text="👽" title="With Callback Card" fn={setter} />;
-
-  return React.createElement(_Card.Card, {
+  return React.createElement(PureCard, {
+    text: "\uD83D\uDC7D",
     title: "With Callback Card",
-    enableRenderCount: true,
-    actionButton: btn
+    fn: setter
   });
 };
 
@@ -33382,6 +33420,18 @@ Object.keys(_UseContextApp).forEach(function (key) {
   });
 });
 
+var _UseDebugValues = require("./UseDebugValues");
+
+Object.keys(_UseDebugValues).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function () {
+      return _UseDebugValues[key];
+    }
+  });
+});
+
 var _UseMemoCompareApp = require("./UseMemoCompareApp");
 
 Object.keys(_UseMemoCompareApp).forEach(function (key) {
@@ -33465,7 +33515,7 @@ Object.keys(_Home).forEach(function (key) {
     }
   });
 });
-},{"./UseAsyncApp":"src/Apps/UseAsyncApp.tsx","./UseContextApp":"src/Apps/UseContextApp.tsx","./UseMemoCompareApp":"src/Apps/UseMemoCompareApp.tsx","./UseCallbackApp":"src/Apps/UseCallbackApp.tsx","./UseLayoutEffectApp":"src/Apps/UseLayoutEffectApp.tsx","./UseIntervalApp":"src/Apps/UseIntervalApp.tsx","./UsePreviousApp":"src/Apps/UsePreviousApp.tsx","./UseMemoApp":"src/Apps/UseMemoApp.tsx","./Home":"src/Apps/Home.tsx"}],"src/Apps/UseRenderCountApp.tsx":[function(require,module,exports) {
+},{"./UseAsyncApp":"src/Apps/UseAsyncApp.tsx","./UseContextApp":"src/Apps/UseContextApp.tsx","./UseDebugValues":"src/Apps/UseDebugValues.tsx","./UseMemoCompareApp":"src/Apps/UseMemoCompareApp.tsx","./UseCallbackApp":"src/Apps/UseCallbackApp.tsx","./UseLayoutEffectApp":"src/Apps/UseLayoutEffectApp.tsx","./UseIntervalApp":"src/Apps/UseIntervalApp.tsx","./UsePreviousApp":"src/Apps/UsePreviousApp.tsx","./UseMemoApp":"src/Apps/UseMemoApp.tsx","./Home":"src/Apps/Home.tsx"}],"src/Apps/UseRenderCountApp.tsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33606,6 +33656,10 @@ var App = function App() {
     component: _Apps.UseCallbackApp,
     linkName: "useCallback"
   }, {
+    to: "/useDebugValues",
+    component: _Apps.UseDebugValues,
+    linkName: "useDebugValues"
+  }, {
     to: "/useInterval",
     component: _Apps.UseIntervalApp,
     linkName: "useInterval"
@@ -33701,7 +33755,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54926" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63984" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
