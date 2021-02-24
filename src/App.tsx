@@ -11,6 +11,7 @@ import {
   UseMemoApp,
   Home,
   UseCallbackApp,
+  UseDebugValues,
 } from "./Apps";
 import { UseRenderCountApp } from "./Apps/UseRenderCountApp";
 import { UseTogglerApp } from "./Apps/UseTogglerApp";
@@ -24,6 +25,7 @@ export const App = () => {
     { to: "/useAsync", component: UseAsyncApp, linkName: "useAsync" },
     { to: "/useContext", component: UseContextApp, linkName: "useContext" },
     { to: "/useCallback", component: UseCallbackApp, linkName: "useCallback" },
+    { to: "/useDebugValues", component: UseDebugValues, linkName: "useDebugValues" },
     {
       to: "/useInterval",
       component: UseIntervalApp,
