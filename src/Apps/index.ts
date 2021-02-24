@@ -1,5 +1,6 @@
 export * from "./UseAsyncApp";
 export * from "./UseContextApp";
+export * from "./UseDebugValues";
 export * from "./UseMemoCompareApp";
 export * from "./UseCallbackApp";
 export * from "./UseLayoutEffectApp";
